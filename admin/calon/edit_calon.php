@@ -1,8 +1,8 @@
 <?php
-
+	require_once 'Calon.php';
     if(isset($_GET['kode'])){
         $sql_cek = "SELECT * FROM tb_calon WHERE id_calon='".$_GET['kode']."'";
-        $query_cek = mysqli_query($koneksi, $sql_cek);
+        $query_cek = mysqli_query($connection, $sql_cek);
         $data_cek = mysqli_fetch_array($query_cek,MYSQLI_BOTH);
     }
 ?>
@@ -61,49 +61,16 @@
 
 <?php
 
-$sumber = @$_FILES['foto_calon']['tmp_name'];
-$target = 'foto/';
-$nama_file = @$_FILES['foto_calon']['name'];
-$pindah = move_uploaded_file($sumber, $target.$nama_file);
+if (isset($_POST['Ubah'])) {
+    $id_calon = $_POST['id_calon'];
+    $nama_calon = $_POST['nama_calon'];
+    $foto_calon = $_FILES['foto_calon']['name'];
+    $keterangan = $_POST['keterangan'];
 
-if (isset ($_POST['Ubah'])){
+    // Menginisialisasi objek Calon
+    $calon = new Calon();
 
-    if(!empty($sumber)){
-        $foto= $data_cek['foto_calon'];
-            if (file_exists("foto/$foto")){
-            unlink("foto/$foto");}
-
-        $sql_ubah = "UPDATE tb_calon SET
-            nama_calon='".$_POST['nama_calon']."',
-            foto_calon='".$nama_file."',
-            keterangan='".$_POST['keterangan']."'
-            WHERE id_calon='".$_POST['id_calon']."'";
-        $query_ubah = mysqli_query($koneksi, $sql_ubah);
-
-    }elseif(empty($sumber)){
-        $sql_ubah = "UPDATE tb_calon SET
-            nama_calon='".$_POST['nama_calon']."',
-            keterangan='".$_POST['keterangan']."'
-            WHERE id_calon='".$_POST['id_calon']."'";
-        $query_ubah = mysqli_query($koneksi, $sql_ubah);
-        }
-
-    if ($query_ubah) {
-        echo "<script>
-        Swal.fire({title: 'Ubah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
-        }).then((result) => {
-            if (result.value) {
-                window.location = 'index.php?page=data-calon';
-            }
-        })</script>";
-        }else{
-        echo "<script>
-        Swal.fire({title: 'Ubah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
-        }).then((result) => {
-            if (result.value) {
-                window.location = 'index.php?page=data-calon';
-            }
-        })</script>";
-    }
+    // Memanggil fungsi editCalon
+    $calon->editCalon($id_calon, $nama_calon, $foto_calon, $keterangan);
 }
-
+?>

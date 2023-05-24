@@ -1,3 +1,8 @@
+<?php
+
+require_once 'Calon.php'
+?>
+
 <div class="card card-primary">
 	<div class="card-header">
 		<h3 class="card-title">
@@ -46,45 +51,16 @@
 </div>
 
 <?php
+if (isset($_POST['Simpan'])) {
+    $id_calon = $_POST['id_calon'];
+    $nama_calon = $_POST['nama_calon'];
+    $foto_calon = $_FILES['foto_calon']['name'];
+    $keterangan = $_POST['keterangan'];
 
-    $sumber = @$_FILES['foto_calon']['tmp_name'];
-    $target = 'foto/';
-    $nama_file = @$_FILES['foto_calon']['name'];
-    $pindah = move_uploaded_file($sumber, $target.$nama_file);
+    // Menginisialisasi objek Calon
+    $calon = new Calon();
 
-    if (isset ($_POST['Simpan'])){
-
-		if(!empty($sumber)){
-        $sql_simpan = "INSERT INTO tb_calon (id_calon, nama_calon, foto_calon, keterangan) VALUES (
-        '".$_POST['id_calon']."',
-        '".$_POST['nama_calon']."',
-        '".$nama_file."',
-        '".$_POST['keterangan']."')";
-        $query_simpan = mysqli_query($koneksi, $sql_simpan);
-        mysqli_close($koneksi);
-
-    if ($query_simpan) {
-      echo "<script>
-      Swal.fire({title: 'Tambah Data Berhasil',text: '',icon: 'success',confirmButtonText: 'OK'
-      }).then((result) => {if (result.value){
-          window.location = 'index.php?page=data-calon';
-          }
-      })</script>";
-      }else{
-      echo "<script>
-      Swal.fire({title: 'Tambah Data Gagal',text: '',icon: 'error',confirmButtonText: 'OK'
-      }).then((result) => {if (result.value){
-          window.location = 'index.php?page=add-calon';
-          }
-      })</script>";
-	}
-}elseif(empty($sumber)){
-	echo "<script>
-	Swal.fire({title: 'Gagal, Foto Wajib Diisi',text: '',icon: 'error',confirmButtonText: 'OK'
-	}).then((result) => {
-		if (result.value) {
-			window.location = 'index.php?page=add-calon';
-		}
-	})</script>";
-  }
-}   
+    // Memanggil fungsi tambahCalon
+    $calon->tambahCalon($id_calon, $nama_calon, $foto_calon, $keterangan);
+}
+?>

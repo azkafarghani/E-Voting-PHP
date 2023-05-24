@@ -178,20 +178,9 @@
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
+								
 								<li class="nav-item">
-									<a href="#" class="nav-link">
-										<i class="nav-icon far fa-circle text-info"></i>
-										<p>Daftar Kandidat</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="#" class="nav-link">
-										<i class="nav-icon far fa-circle text-info"></i>
-										<p>Daftar pemilih</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="#" class="nav-link">
+									<a href="?page=data-suara" class="nav-link">
 										<i class="nav-icon far fa-circle text-info"></i>
 										<p>Perolehan Suara</p>
 									</a>

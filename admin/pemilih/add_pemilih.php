@@ -1,6 +1,6 @@
 <?php 
-	//membuat acak angka
-	$pass_acak = mt_rand(1000, 9999);
+	require_once 'Pemilih.php';
+    require_once 'koneksi.php';
 ?>
 
 <div class="card card-primary">
@@ -34,32 +34,12 @@
 </div>
 
 <?php
+if (isset($_POST['Simpan'])) {
+    $nama_pengguna = $_POST['nama_pengguna'];
+    $username = $_POST['username'];
 
-    if (isset ($_POST['Simpan'])){
-    
-        $sql_simpan = "INSERT INTO tb_pengguna (nama_pengguna,username,password,level,status,jenis) VALUES (
-        '".$_POST['nama_pengguna']."',
-        '".$_POST['username']."',
-        '".$pass_acak ."',
-        'Pemilih',
-        '1',
-        'PST')";
-        $query_simpan = mysqli_query($koneksi, $sql_simpan);
-        mysqli_close($koneksi);
+    $pemilih = new Pemilih(); 
 
-    if ($query_simpan) {
-      echo "<script>
-      Swal.fire({title: 'Tambah Data Berhasil',text: '',confirmButtonText: 'OK'
-      }).then((result) => {if (result.value){
-          window.location = 'index.php?page=data-pemilih';
-          }
-      })</script>";
-      }else{
-      echo "<script>
-      Swal.fire({title: 'Tambah Data Gagal',text: '',confirmButtonText: 'OK'
-      }).then((result) => {if (result.value){
-          window.location = 'index.php?page=add-pemilih';
-          }
-      })</script>";
-    }}
-     //selesai proses simpan data
+    $pemilih->tambahPemilih($nama_pengguna, $username);
+}
+?>
