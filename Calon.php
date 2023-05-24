@@ -35,7 +35,8 @@ class Calon extends DBConnection
             '".$keterangan."')";
         }
 
-        $query_simpan = mysqli_query($this->connection, $sql_simpan);
+        $query_simpan = $this->query($sql_simpan);
+        // $query_simpan = mysqli_query($this->connection, $sql_simpan);
 
         if ($query_simpan) {
             echo "<script>

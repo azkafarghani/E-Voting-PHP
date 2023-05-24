@@ -1,5 +1,4 @@
 <?php
-
 require_once 'Calon.php'
 ?>
 
@@ -56,10 +55,8 @@ if (isset($_POST['Simpan'])) {
     $nama_calon = $_POST['nama_calon'];
     $foto_calon = $_FILES['foto_calon']['name'];
     $keterangan = $_POST['keterangan'];
-
     // Menginisialisasi objek Calon
     $calon = new Calon();
-
     // Memanggil fungsi tambahCalon
     $calon->tambahCalon($id_calon, $nama_calon, $foto_calon, $keterangan);
 }

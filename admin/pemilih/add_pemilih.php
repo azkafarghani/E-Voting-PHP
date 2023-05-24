@@ -1,6 +1,5 @@
 <?php 
 	require_once 'Pemilih.php';
-    require_once 'koneksi.php';
 ?>
 
 <div class="card card-primary">
@@ -37,9 +36,7 @@
 if (isset($_POST['Simpan'])) {
     $nama_pengguna = $_POST['nama_pengguna'];
     $username = $_POST['username'];
-
     $pemilih = new Pemilih(); 
-
     $pemilih->tambahPemilih($nama_pengguna, $username);
 }
 ?>

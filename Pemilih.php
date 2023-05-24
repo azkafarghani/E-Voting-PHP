@@ -20,9 +20,7 @@ class Pemilih extends DBConnection
             'Pemilih',
             '1',
             'PST')";
-        $query_simpan = mysqli_query($this->connection, $sql_simpan);
-
-
+        $query_simpan = $this->query($sql_simpan);
         if ($query_simpan) {
             echo "<script>
             Swal.fire({title: 'Tambah Data Berhasil',text: '',confirmButtonText: 'OK'
