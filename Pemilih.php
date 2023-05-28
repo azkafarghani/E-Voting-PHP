@@ -73,7 +73,7 @@ class Pemilih extends DBConnection
         }
     }
 
-    public function deletePemilih()
+    public function hapusPemilih($id_pengguna)
     {
         if (isset($_GET['kode'])) {
             $sql_hapus = "DELETE FROM tb_pengguna WHERE id_pengguna='".$_GET['kode']."'";
@@ -96,5 +96,50 @@ class Pemilih extends DBConnection
             }
         }
     }
+    public function vote($id_calon)
+{
+    $pemilihId = $_SESSION["ses_id"];
+
+    // Periksa apakah pemilih sudah melakukan vote sebelumnya
+    $sql_cek_vote = "SELECT * FROM tb_vote WHERE id_pemilih = '" . $pemilihId . "'";
+    $query_cek_vote = $this->connection->query($sql_cek_vote);
+
+    if ($query_cek_vote->num_rows > 0) {
+        // Jika pemilih sudah melakukan vote, tampilkan pesan error
+        echo "<script>
+            Swal.fire({title: 'Anda Sudah Melakukan Vote', text: '', icon: 'error', confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.value) {
+                    window.location = 'index.php?page=PsSQAdT';
+                }
+            })</script>";
+    } else {
+        // Jika pemilih belum melakukan vote, simpan data vote dan ubah status pemilih
+        $sql_simpan_vote = "INSERT INTO tb_vote (id_calon, id_pemilih) VALUES (
+            '" . $id_calon . "',
+            '" . $pemilihId . "')";
+        $sql_ubah_status = "UPDATE tb_pengguna SET status = '0' WHERE id_pengguna = '" . $pemilihId . "'";
+
+        // Eksekusi query menggunakan koneksi dari DBConnection
+        if ($this->connection->query($sql_simpan_vote) && $this->connection->query($sql_ubah_status)) {
+            echo "<script>
+                Swal.fire({title: 'Anda Berhasil Memilih', text: '', icon: 'success', confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.value) {
+                        window.location = 'index.php?page=PsSQAdT';
+                    }
+                })</script>";
+        } else {
+            echo "<script>
+                Swal.fire({title: 'Gagal Memilih', text: '', icon: 'error', confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.value) {
+                        window.location = 'index.php?page=PsSQAdT';
+                    }
+                })</script>";
+        }
+    }
+}
+
 }
 ?>

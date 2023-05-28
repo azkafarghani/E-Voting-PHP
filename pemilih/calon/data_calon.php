@@ -1,5 +1,6 @@
 <?php
-
+	require_once 'inc/koneksi.php';
+	require_once 'Pemilih.php';
 	$data_id = $_SESSION["ses_id"];
 
 	$sql = $koneksi->query("select * from tb_pengguna where id_pengguna=$data_id");

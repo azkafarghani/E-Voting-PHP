@@ -1,4 +1,5 @@
 <?php
+    require_once 'Pemilih.php';
     if(isset($_GET['kode'])){
         $sql_cek = "SELECT * FROM tb_pengguna WHERE id_pengguna='".$_GET['kode']."'";
         $query_cek = mysqli_query($connection, $sql_cek);
@@ -51,49 +52,13 @@
 </div>
 
 
-
 <?php
 
-    if (isset ($_POST['Ubah'])){
-    $sql_ubah = "UPDATE tb_pengguna SET
-        nama_pengguna='".$_POST['nama_pengguna']."',
-        username='".$_POST['username']."',
-        password='".$_POST['password']."'
-        WHERE id_pengguna='".$_POST['id_pengguna']."'";
-    $query_ubah = mysqli_query($koneksi, $sql_ubah);
-    mysqli_close($koneksi);
+if (isset($_POST['Ubah'])) {
+    // Menginisialisasi objek Pemilih
+    $pemilih = new Pemilih();
 
-    if ($query_ubah) {
-        echo "<script>
-      Swal.fire({title: 'Ubah Data Berhasil',text: '',confirmButtonText: 'OK'
-      }).then((result) => {if (result.value)
-        {window.location = 'index.php?page=data-pemilih';
-        }
-      })</script>";
-      }else{
-      echo "<script>
-      Swal.fire({title: 'Ubah Data Gagal',text: '',confirmButtonText: 'OK'
-      }).then((result) => {if (result.value)
-        {window.location = 'index.php?page=data-pemilih';
-        }
-      })</script>";
-    }}
+    // Memanggil fungsi editPemilih
+    $pemilih->editPemilih();
+}
 ?>
-
-<script type="text/javascript">
-    function change()
-    {
-    var x = document.getElementById('pass').type;
-
-    if (x == 'password')
-    {
-        document.getElementById('pass').type = 'text';
-        document.getElementById('mybutton').innerHTML;
-    }
-    else
-    {
-        document.getElementById('pass').type = 'password';
-        document.getElementById('mybutton').innerHTML;
-    }
-    }
-</script>
